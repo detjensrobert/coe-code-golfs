@@ -1,23 +1,25 @@
 #!/bin/ruby
+# frozen_string_literal: true
 
-## Minified solution (142 chars):
+## Minified solution (139 chars):
+# rubocop:disable all
 
-i=IO::read("enc_image.png").each_byte
-k=IO::read("key").each_byte
+i=IO.read('enc_image.png').each_byte
+k=IO.read('key').each_byte
 k+=k while k.size<i.size
-IO::binwrite("d",i.zip(k).map{|x,y|(x^y).chr}.join)
+IO.binwrite('d',i.zip(k).map{|x,y|(x^y).chr}.join)
 
+# rubocop:enable all
 ## Readable solution:
 
-image = File::read("enc_image.png").each_byte
+image = File.read('enc_image.png').each_byte
 
-key = File::read("key").each_byte
+key = File.read('key').each_byte
 key += key while key.size < image.size
 
-decoded = ""
+decoded = ''
+image.zip(key).each do |img_b, key_b|
+  decoded += (img_b ^ key_b).chr
+end
 
-image.zip(key).each do |b, k|
-  decoded += (b ^ k).chr
-end.join
-
-File.binwrite("decoded.png", decoded)
+File.binwrite('decoded.png', decoded)
