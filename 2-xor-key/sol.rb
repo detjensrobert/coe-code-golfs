@@ -1,12 +1,12 @@
 #!/bin/ruby
 # frozen_string_literal: true
 
-## Minified solution (139 chars):
+## Minified solution (130 bytes):
 # rubocop:disable all
 
 i=IO.read('enc_image.png').each_byte
 k=IO.read('key').each_byte
-k+=k while k.size<i.size
+481.times{k+=k}
 IO.binwrite('d',i.zip(k).map{|x,y|(x^y).chr}.join)
 
 # rubocop:enable all
